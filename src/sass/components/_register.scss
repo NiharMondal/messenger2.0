@@ -1,0 +1,60 @@
+@import "../utils/variable";
+.auth_imgage_section {
+  @media (max-width: 984px) {
+    display: none;
+  }
+}
+.auth_regi_section {
+  @media (max-width: 984px) {
+    width: 100%;
+  }
+}
+
+.auth_section {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  .auth_image {
+    height: 450px;
+    width: 450px;
+    box-shadow: $boxShadow;
+    border-radius: 12px;
+  }
+}
+.file_image {
+  display: flex;
+  align-items: center;
+  height: 100%;
+  .image {
+    height: 50px;
+    width: 50px;
+    border-radius: 50%;
+    box-shadow: $boxShadow;
+    img {
+      height: 100%;
+      width: 100%;
+      border-radius: 50%;
+    }
+  }
+  .file {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    label {
+      cursor: pointer;
+      padding: 6px 10px;
+      margin-left: 10px;
+      background-color: $secondaryColor;
+      border-radius: 7px;
+      color: #fff;
+      &:hover {
+        background-color: $secondaryColorHover;
+      }
+    }
+    .file_control {
+      display: none;
+    }
+  }
+}

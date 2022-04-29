@@ -1,0 +1,39 @@
+@import "./variable";
+.card {
+  width: 96%;
+  padding: $cardpd;
+  border-radius: 10px;
+  -webkit-box-shadow: $boxShadow;
+  box-shadow: $boxShadow;
+  .card__header {
+    font-size: 21px;
+    text-align: center;
+    margin: 15px 0 20px 0;
+  }
+  .auth_btn {
+    color: #fff;
+    background-color: $primaryColor;
+    &:hover {
+      background-color: $primaryHoverColor;
+    }
+  }
+}
+@media (max-width: 767px) {
+  .auth_btn {
+    margin: 10px 0;
+  }
+}
+@media (max-width: 767px) {
+  .file_control {
+    margin-top: 10px;
+  }
+}
+@media (max-width: 667px) {
+  .card__header {
+    font-size: 16px;
+    margin: 10px 0 10px 0;
+    h2 {
+      font-size: 22px;
+    }
+  }
+}

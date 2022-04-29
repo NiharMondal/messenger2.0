@@ -1,57 +1,63 @@
-import { CardContent, Typography, Button } from "@mui/material";
-import React, { useState } from "react";
-import { CustomBox, Form, Input, MyCard } from "../components/card";
-import { Link } from "react-router-dom";
-const Login = () => {
-  const [userInfo, setUserInfo] = useState({
-    email: "",
-    password: "",
-  });
-  const hangleChange = (e) => {
-    setUserInfo({ ...userInfo, [e.target.name]: e.target.value });
-  };
+import React from "react";
+import { Link } from 'react-router-dom'
 
-  const handleLogin = (e) => {
-    e.preventDefault()
-    console.log(userInfo);
-  };
+
+const Login = () => {
   return (
-    <CustomBox>
-      <MyCard>
-        <CardContent>
-          <Typography variant="h4">Login your account</Typography>
-          <Form onSubmit={handleLogin}>
-            <Input
-              onChange={hangleChange}
-              variant="outlined"
-              label=" Your Email"
-              type="email"
-              name="email"
-              required
+    <div className="container-fluid overflow-hidden">
+      <div className="row auth_section">
+        <div className="col-12 col-sm-6 col-md-6 auth_imgage_section">
+          <div className=" d-flex justify-content-center">
+            <img
+              src="/static/login.jpg"
+              alt="register-logo"
+              className="auth_image"
             />
-            <Input
-              onChange={hangleChange}
-              variant="outlined"
-              label="Enter your Password"
-              type="password"
-              name="password"
-              required
-            />
-            <Button fullWidth={true} variant="contained" type="submit">
-              Login
-            </Button>
-          </Form>
-          <Typography align="center">
-            <Link
-              to="/register"
-              style={{ textDecoration: "none", color: "inherit" }}
-            >
-              Create your account
-            </Link>
-          </Typography>
-        </CardContent>
-      </MyCard>
-    </CustomBox>
+          </div>
+        </div>
+        <div className="col-12 col-sm-12 col-md-6 auth_regi_section">
+          <div className="d-flex justify-content-center">
+            <div className="card">
+              <div className="card__header">
+                <h2>Log in Now</h2>
+                <p>to start your journey</p>
+              </div>
+              <section className="card__body">
+                <form className="row  g-md-3 ">
+                  
+                  <div className="col-md-12">
+                    <label htmlFor="email" className="form-label">
+                      Email
+                    </label>
+                    <input type="email" className="form-control" id="email" />
+                  </div>
+
+                  <div className="col-12">
+                    <label htmlFor="password" className="form-label">
+                      Password
+                    </label>
+                    <input type="password" className="form-control" id="password" />
+                  </div>
+                  
+                  <div className="col-md-12  mx-auto d-grid ">
+                    <button type="submit" className="btn  auth_btn">
+                      Login
+                    </button>
+                  </div>
+
+                  <div className="col-12  mt-md-4 text-center">
+                    <h6>
+                      Don't have an account?{" "}
+                      <Link to="/messenger2.0/register">Get started</Link>
+                    </h6>
+                  </div>
+                </form>
+              </section>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   );
 };
 
