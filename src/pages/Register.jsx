@@ -1,9 +1,11 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
-import { useAddUserMutation } from "../redux/features/authSlice";
-
+import { useRegisterUserMutation } from "../redux/features/authSlice";
+import { useNavigate } from "react-router-dom";
 const Register = () => {
+  const navigate = useNavigate();
+  const [token, setToken] = useState("");
   const [state, setState] = useState({
     userName: "",
     email: "",
@@ -12,9 +14,22 @@ const Register = () => {
     photo: "",
   });
   const [file, setFile] = useState(null);
-  const [createUser] = useAddUserMutation();
-
+  const [registerUser, { data }] = useRegisterUserMutation();
   const [message, setMessage] = useState("");
+  useEffect(() => {
+    setMessage(data);
+
+    if (data?.token) {
+      setToken(data?.token);
+      localStorage.setItem("authToken", token);
+      toast.success(message?.success);
+      setTimeout(() => {
+        navigate("/messenger2.0/home", { replace: true });
+      }, 2000);
+    } else if (data?.error) {
+      return toast.error(message?.error);
+    }
+  }, [message, data, token, navigate]);
   //======= input =======
   const inputHandle = (e) => {
     setState({ ...state, [e.target.name]: e.target.value });
@@ -31,35 +46,30 @@ const Register = () => {
     reader.readAsDataURL(e.target.files[0]);
   };
 
-  //=========form submit=========
-  const handleSubmit = async (e) => {
+  //=========Register user=========
+  const handleRegister = async (e) => {
     e.preventDefault();
+
     const { userName, email, password, confirmPassword, photo } = state;
 
-    const formData = await new FormData();
-
-    formData.append("photo", photo);
-    formData.append("userName", userName);
-    formData.append("email", email);
-    formData.append("password", password);
-    formData.append("confirmPassword", confirmPassword);
     try {
-      const newData = await createUser(formData);
-      console.log(newData);
-      const error = await newData?.data?.error;
-      const success = await newData?.data.message;
-      if (error) {
-        setMessage(error);
-        return toast.error(message);
-      } else {
-        setMessage(success);
-        return toast.success(message);
-      }
-    } catch (error) {}
+      const formData = await new FormData();
+
+      formData.append("photo", photo);
+      formData.append("userName", userName);
+      formData.append("email", email);
+      formData.append("password", password);
+      formData.append("confirmPassword", confirmPassword);
+
+      await registerUser(formData);
+    } catch (e) {
+      console.log(e);
+    }
   };
+
   return (
     <div className="container-fluid overflow-hidden">
-      <ToastContainer error={true} autoClose={1500} />
+      <ToastContainer error={true} autoClose={2000} />
       <div className="row auth_section">
         <div className="col-12 col-sm-6 col-md-6 auth_imgage_section">
           <div className=" d-flex justify-content-center">
@@ -78,7 +88,7 @@ const Register = () => {
                 <p>to join our community</p>
               </div>
               <section className="card__body">
-                <form className="row  g-md-3" onSubmit={handleSubmit}>
+                <form className="row  g-md-3" onSubmit={handleRegister}>
                   <div className="col-md-6">
                     <label htmlFor="fullName" className="form-label">
                       Fullname

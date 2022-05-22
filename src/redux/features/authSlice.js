@@ -5,23 +5,31 @@ const baseUrl = "http://localhost:4000/";
 export const authApi = createApi({
   reducerPath: "authApi",
   baseQuery: fetchBaseQuery({ baseUrl: baseUrl }),
-  tagTypes: ["Users"],
+  tagTypes: ["RegisterUser", "LoginUser"],
   endpoints: (build) => ({
-    // ==========add user============
-
-    addUser:  build.mutation({
+    // ==========register user============
+    registerUser: build.mutation({
       query(formData) {
         return {
-          url: "api/messenger/users",
+          url: "api/messenger/register",
           method: "POST",
           body: formData,
-          
         };
       },
-      invalidatesTags: ["Users"],
-    },),
+      invalidatesTags: ["RegisterUser"],
+    }),
 
-    
+    //=============login user============
+    loginUser: build.mutation({
+      query(state) {
+        return {
+          url: "api/messenger/login",
+          method: "POST",
+          body: state,
+        };
+      },
+      invalidatesTags: ["LoginUser"],
+    }),
   }),
 });
-export const { useAddUserMutation } = authApi;
+export const { useRegisterUserMutation ,useLoginUserMutation} = authApi;
